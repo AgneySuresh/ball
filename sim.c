@@ -61,22 +61,19 @@ void cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
     // Convert to OpenGL NDC coordinates (-1 to 1)
     mouseX_NDC = (float)xpos / width * 2.0f - 1.0f;
     mouseY_NDC = 1.0f - (float)ypos / height * 2.0f;  // flip y
+    
 }
-
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
     if (button == GLFW_MOUSE_BUTTON_LEFT) {
         if (action == GLFW_PRESS) {
             float dx = mouseX_NDC - ball.x;
             float dy = mouseY_NDC - ball.y;
             float distSq = dx*dx + dy*dy;
-            printf("Mouse pressed at: %.2f, %.2f\n", mouseX_NDC, mouseY_NDC);
-            printf("Ball at: %.2f, %.2f\n", ball.x, ball.y);
-            printf("Distance squared: %.2f\n", dx*dx + dy*dy);
-            if (distSq <= ball.radius * ball.radius) {
-                printf("Inside ball: dragging started!\n");
+            if (distSq <= 0.08f) {
                 dragging = true;
             }
-        } else if (action == GLFW_RELEASE) {
+        }
+        else if (action == GLFW_RELEASE) {
             dragging = false;
         }
     }
@@ -181,9 +178,6 @@ int main(){
         ball.vy += ball.ay * deltaTime;
         ball.x += ball.vx * deltaTime;
         ball.y += ball.vy * deltaTime;
-        
-        // radius of the ball (used for collision)
-        float radius = 0.05f;
 
         // wall boundaries
         float top = 1.0f;
