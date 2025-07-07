@@ -1,2 +1,2 @@
 # ball
-A ball.
+![](ball.gif)
